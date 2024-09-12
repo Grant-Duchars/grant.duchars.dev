@@ -1,2 +1,2 @@
-# personal-website
-Repo for grant.duchars.dev
+# grant.duchars.dev
+Repo for my personal website

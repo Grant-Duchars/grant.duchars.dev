@@ -1,10 +1,11 @@
 [package]
-name = "personal-website"
+name = "grant-duchars-dev"
 version = "0.1.0"
+authors = ["Grant Duchars"]
 edition = "2021"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+homepage = "grant.duchars.dev"
 
 [dependencies]
+leptos = { version = "0.7.8", features = ["csr"] }
 console_error_panic_hook = "0.1.7"
-leptos = { version = "0.5.7", features = ["csr", "nightly"] }
+leptos-use = "0.15.7"

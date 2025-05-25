@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Grant Duchars's Website</title>
+    <link rel="stylesheet" href="/styles-399766e09d37828.css" integrity="sha384-WcuvNj2p7ZnHZ/c+oNybKYCkbiqgPmZ/ZrGhyU2hDkSVll2DWAsvKtv3AYswVgDH"/>
+    
+    
+<script type="module">
+import init, * as bindings from '/grant-duchars-dev-77adfc3eed704469.js';
+const wasm = await init({ module_or_path: '/grant-duchars-dev-77adfc3eed704469_bg.wasm' });
+
+
+window.wasmBindings = bindings;
+
+
+dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
+
+</script>
+  <link rel="modulepreload" href="/grant-duchars-dev-77adfc3eed704469.js" crossorigin="anonymous" integrity="sha384-f8YAwSd+PWl6ur33QnHYzNLKdc2ADpeEWmdOlJO/o8xHZ51t31dTrjJ1kAiW81xR"><link rel="preload" href="/grant-duchars-dev-77adfc3eed704469_bg.wasm" crossorigin="anonymous" integrity="sha384-hPza62TLtGUY2XhMNSH1Phw9gLOwqtLW/vlAcHWmPUU8yW2VrvRL8tZPU5//Nv+S" as="fetch" type="application/wasm"></head>
+  <body></body>
+</html>

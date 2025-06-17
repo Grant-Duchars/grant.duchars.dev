@@ -1,10 +1,17 @@
-use super::{DesktopItem, DesktopItems, Dimensions, WindowData};
+use crate::{DesktopItem, DesktopItems, Dimensions, WindowData, Windows};
 use leptos::{html, prelude::*};
 use leptos_use::{use_draggable_with_options, UseDraggableOptions, UseDraggableReturn};
+use std::collections::HashSet;
 
 impl Default for Dimensions {
     fn default() -> Self {
         Self { w: 400.0, h: 250.0 }
+    }
+}
+
+impl Default for Windows {
+    fn default() -> Self {
+        Self(RwSignal::new(HashSet::default()))
     }
 }
 
@@ -27,26 +34,21 @@ impl Default for WindowData {
             position,
             set_position,
             initial_position: Default::default(),
-            is_open: RwSignal::new(true),
             is_minimized: RwSignal::new(false),
+            is_maximized: RwSignal::new(false),
+            is_open: RwSignal::new(true),
             desktop_item: true,
         }
     }
 }
+// End Default WindowData
 
 impl Default for DesktopItems {
     fn default() -> Self {
-        Self::from(vec![
-            DesktopItem::new(
-                "public/github-mark-white.svg",
-                "Github",
-                "https://github.com/Grant-Duchars",
-            ),
-            DesktopItem::new(
-                "public/LI-In-Bug.png",
-                "LinkedIn",
-                "https://www.linkedin.com/in/grant-duchars/",
-            ),
-        ])
+        use crate::{external_links, icons};
+        Self(RwSignal::new(HashSet::from([
+            DesktopItem::new(icons::GITHUB, "Github", external_links::GITHUB),
+            DesktopItem::new(icons::LINKEDIN, "LinkedIn", external_links::LINKEDIN),
+        ])))
     }
 }

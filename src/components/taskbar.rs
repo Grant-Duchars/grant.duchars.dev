@@ -1,30 +1,39 @@
-use crate::core::WindowData;
+use super::Button;
+use crate::{icons, WindowData, Windows};
 use leptos::prelude::*;
 
+/// Creates the area in the footer where the taskbar items are displayed
 #[component]
-pub fn taskbar(items: ReadSignal<Vec<WindowData>>) -> impl IntoView {
+pub fn taskbar() -> impl IntoView {
+    let windows = expect_context::<Windows>();
     view! {
-        <div id="task-bar">
+        <div id="taskbar" aria_label="taskbar">
+            <MenuButton/>
             <For
-                each=move || items.get()
-                key=|item| item.title
+                each=move || windows()
+                key=|window| window.title
                 children=move |data| view! { <TaskbarItem data/> }
             />
         </div>
     }
 }
 
+/// Creates a new taskbar item that is related to the window whose data was provided
 #[component]
 fn taskbar_item(data: WindowData) -> impl IntoView {
     view! {
         <Show when=move || data.is_open.get() fallback=|| ()>
-            <button
-                type="button"
-                on:click=move |_| data.is_minimized.set(false)
-                on:dblclick=move |_| data.reset_position()
-            >
-                <img src=data.icon/>
-            </button>
+            <Button
+                icon=data.icon
+                label=format!("taskbar item: {}", data.title.to_lowercase())
+                on_click=move |_| data.is_minimized.set(false)
+                on_dblclick=move |_| data.reset_position()
+            />
         </Show>
     }
+}
+
+#[component]
+pub fn menu_button() -> impl IntoView {
+    view! { <Button icon=icons::MENU label="main menu"/> }
 }

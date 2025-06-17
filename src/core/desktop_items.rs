@@ -1,54 +1,32 @@
-use super::{DesktopItem, DesktopItems, WindowData};
+use crate::DesktopItem;
 use leptos::prelude::*;
-use std::ops::{Deref, DerefMut};
+use std::{collections::HashSet, ops};
 
-impl IntoIterator for DesktopItems {
-    type Item = DesktopItem;
-    type IntoIter = <Vec<DesktopItem> as IntoIterator>::IntoIter;
-
-    fn into_iter(self) -> Self::IntoIter {
-        self.0.into_iter()
-    }
-}
-
-impl Deref for DesktopItems {
-    type Target = Vec<DesktopItem>;
+/// Stores the set of all [`DesktopItem`]s \
+/// Used for simplifying type signatures and for implementing a default set of items
+#[derive(Clone)]
+pub struct DesktopItems(pub RwSignal<HashSet<DesktopItem>>);
+impl ops::Deref for DesktopItems {
+    type Target = RwSignal<HashSet<DesktopItem>>;
 
     fn deref(&self) -> &Self::Target {
         &self.0
     }
 }
-
-impl DerefMut for DesktopItems {
+impl ops::DerefMut for DesktopItems {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.0
     }
 }
-
-impl From<WindowData> for DesktopItem {
-    fn from(window: WindowData) -> Self {
-        let WindowData {
-            icon,
-            title,
-            is_open,
-            ..
-        } = window;
-        Self {
-            icon,
-            title,
-            func: is_open.into(),
-        }
-    }
-}
+// End DesktopItems
 
 /// Sum type for desktop item functions \
 /// Created from a `RwSignal<bool>` or `&'static str`
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash)]
 pub enum DesktopItemFunction {
     Window(RwSignal<bool>),
     ExternalLink(&'static str),
 }
-
 impl From<RwSignal<bool>> for DesktopItemFunction {
     fn from(window: RwSignal<bool>) -> Self {
         Self::Window(window)
@@ -59,3 +37,4 @@ impl From<&'static str> for DesktopItemFunction {
         Self::ExternalLink(link)
     }
 }
+// End DesktopItemFunction

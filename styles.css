@@ -1,13 +1,33 @@
+/* Initial Setup */
+:root {
+  --taskbar-border-width: 1px;
+  --taskbar-height: 45px;
+  --taskbar-total-padding-height: 4px;
+  --taskbar-total-height: calc(
+    calc(var(--taskbar-total-padding-height) + var(--taskbar-border-width)) +
+      var(--taskbar-height)
+  );
+}
 * {
   margin: 0;
   padding: 0;
 }
-
 html,
 body {
   height: 100%;
 }
+.icon {
+  aspect-ratio: 1/1;
+  height: 100%;
+}
 
+/* Link Color */
+a,
+a:visited {
+  color: #219ebc;
+}
+
+/* Desktop Background */
 html {
   background-image: url("public/desktop-background.png");
   background-repeat: no-repeat;
@@ -16,30 +36,16 @@ html {
   background-position: center;
 }
 
+/* Desktop Area */
 main {
   position: relative;
-  z-index: 0;
   width: 100%;
-  height: calc(100% - 50px);
+  height: calc(100% - var(--taskbar-total-height));
   overflow: hidden;
   box-sizing: border-box;
 }
 
-ul {
-  list-style-position: inside;
-}
-
-button img,
-a img {
-  aspect-ratio: 1/1;
-  height: 100%;
-}
-
-a,
-a:visited {
-  color: #219ebc;
-}
-
+/* Window */
 .window {
   position: fixed;
   display: flex;
@@ -47,26 +53,49 @@ a:visited {
   border: none;
 }
 
+/* Window Bar */
 .window-bar {
   display: flex;
-  height: 20px;
+  height: 30px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.5);
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
-  padding: 5px;
   background: #ddd;
 }
 
-.window-bar p {
+/* Window Bar Draggable */
+.window-bar > div {
+  display: flex;
   flex-grow: 1;
+  line-height: 30px;
 }
 
+/* Window Bar Icon */
+.window-bar > div .icon {
+  height: 20px;
+  margin-top: 5px;
+  margin-left: 5px;
+}
+
+/* Window Bar Title */
+.window-bar > div h1 {
+  font-size: 16px;
+  font-weight: normal;
+}
+
+/* Window Bar Buttons */
 .window-bar button {
   aspect-ratio: 1/1;
   margin-left: 2px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.window-bar button:last-of-type {
+  margin-right: 5px;
 }
 
-.window-content {
+/* Window Content */
+.window > div:last-of-type {
   background: #000;
   color: #fff;
   padding: 5px;
@@ -75,38 +104,41 @@ a:visited {
   border-bottom-right-radius: 5px;
 }
 
+/* Taskbar */
 footer {
   position: relative;
-  z-index: 1;
-  height: 45px;
-  width: 100%;
-  border-top: thin solid #383838;
-  backdrop-filter: blur(10px) brightness(60%);
-  padding-top: 2px;
-  padding-bottom: 2px;
-}
-
-#task-bar {
   display: flex;
+  height: var(--taskbar-height);
+  border-top: var(--taskbar-border-width) solid #383838;
+  padding-top: calc(var(--taskbar-total-padding-height) / 2);
+  padding-bottom: calc(var(--taskbar-total-padding-height) / 2);
+  backdrop-filter: blur(10px) brightness(60%);
   justify-content: center;
+}
+#taskbar {
+  display: flex;
   height: 100%;
+  width: min-content;
 }
 
-#task-bar button {
+/* Taskbar Item */
+#taskbar button {
   border: thin solid #555555;
   border-radius: 10px;
   background-color: rgba(125, 125, 125, 0.2);
   margin-left: 2px;
+  flex-basis: content;
 }
-
-#task-bar button:hover {
+#taskbar button:hover {
   background-color: rgba(150, 150, 150, 0.2);
 }
 
-#task-bar img {
+/* Taskbar Item Icon */
+#taskbar .icon {
   filter: invert(85%);
 }
 
+/* Desktop */
 #desktop {
   height: 100%;
   width: min-content;
@@ -116,6 +148,7 @@ footer {
   margin-left: 2px;
 }
 
+/* Desktop Item */
 #desktop button {
   background-color: rgba(0, 0, 0, 0);
   border: none;
@@ -127,22 +160,30 @@ footer {
   border-radius: 5px;
   position: relative;
 }
+#desktop button:hover {
+  background-color: rgba(150, 150, 150, 0.2);
+}
 
+/* Desktop Item Title */
+#desktop h1 {
+  font-size: 14px;
+  font-weight: normal;
+  justify-content: center;
+  width: 57px;
+}
 #desktop a {
   color: white;
   text-decoration: none;
 }
 
-#desktop button:hover {
-  background-color: rgba(150, 150, 150, 0.2);
-}
-
-#desktop img:first-of-type {
+/* Desktop Item Icon */
+#desktop .icon:first-of-type {
   height: 42px;
   width: 42px;
 }
 
-#desktop a img:last-of-type {
+/* Desktop Item External Icon */
+#desktop a .icon:last-of-type {
   height: 19px;
   width: 19px;
   border: thin solid black;
@@ -151,9 +192,4 @@ footer {
   position: absolute;
   bottom: 16px;
   right: 0px;
-}
-
-#desktop #desktop p {
-  justify-content: center;
-  width: 57px;
 }

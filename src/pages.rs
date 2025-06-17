@@ -1,10 +1,8 @@
-use crate::components::Window;
-use crate::core::WindowData;
 use leptos::prelude::*;
-use leptos_router::{
-    components::{Outlet, ParentRoute, Route},
-    path, MatchNestedRoutes,
-};
+use leptos_router::components::{Outlet, ParentRoute, Route};
+use leptos_router::{path, MatchNestedRoutes};
+use window_lib::components::Window;
+use window_lib::{icons, WindowData};
 
 #[component(transparent)]
 pub fn windows_open() -> impl MatchNestedRoutes + Clone {
@@ -19,11 +17,13 @@ pub fn windows_open() -> impl MatchNestedRoutes + Clone {
 
 #[component]
 pub fn invalid_path() -> impl IntoView {
-    let data = WindowData::new("public/close-window.svg", "Invalid Path").centered();
+    let data = WindowData::new(icons::CLOSE, "Invalid Path")
+        .centered()
+        .create_desktop_item(false);
     view! {
         <Window data>
-            <h1 style="text-align:center;vertical-align:middle;">"Oops"</h1>
-            <p style="text-align:center;vertical-align:middle;">
+            <h1 style="text-align:center;">"Oops"</h1>
+            <p style="text-align:center;">
                 "It seems the path you were trying to reach doesn't exist."
             </p>
         </Window>
@@ -32,7 +32,7 @@ pub fn invalid_path() -> impl IntoView {
 
 #[component]
 pub fn about() -> impl IntoView {
-    let data = WindowData::new("public/about.svg", "About").centered();
+    let data = WindowData::new(icons::ABOUT, "About").centered();
     view! {
         <Window data>
             <h1>"Site Under Construction"</h1>

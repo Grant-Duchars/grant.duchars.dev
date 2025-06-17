@@ -1,7 +1,4 @@
-#![allow(dead_code)]
 mod app;
-mod components;
-mod core;
 mod pages;
 
 fn main() {

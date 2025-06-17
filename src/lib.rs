@@ -1,17 +1,19 @@
-pub use desktop_items::DesktopItemFunction;
+// Modules
+pub mod components;
+mod core;
+// Re-exports
+pub use core::browser::{self, BrowserCenter, BrowserDimensions};
+pub use core::desktop_items::{DesktopItemFunction, DesktopItems};
+pub use core::statics::*;
+pub use core::window_data::Windows;
+// Imports
 use leptos::{html, prelude::*};
 use leptos_use::core::Position;
 
-mod defaults;
-mod desktop_items;
-mod window_data;
-
 /// Semantic struct for dimension data
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Debug, PartialEq)]
 pub struct Dimensions {
-    /// `width`
     pub w: f64,
-    /// `height`
     pub h: f64,
 }
 
@@ -25,17 +27,19 @@ pub struct WindowData {
     /// NodeRef to window bar div
     pub node_ref: NodeRef<html::Div>,
     /// dimensions of the window
-    pub dimensions: Dimensions,
+    pub dimensions: RwSignal<Dimensions>,
     /// reactive position of the window
     pub position: Signal<Position>,
     /// setter for the window position
     pub set_position: WriteSignal<Position>,
     /// initial starting position of the window
     pub initial_position: Position,
-    /// reactive read & write signal for whether the window is open
-    pub is_open: RwSignal<bool>,
     /// reactive read & write signal for whether the window is minimized
     pub is_minimized: RwSignal<bool>,
+    /// reactive read & write signal for whether the window is maximized
+    pub is_maximized: RwSignal<bool>,
+    /// reactive read & write signal for whether the window is open
+    pub is_open: RwSignal<bool>,
     /// whether the window should create a desktop item
     pub desktop_item: bool,
 }
@@ -69,18 +73,8 @@ impl WindowData {
     }
 }
 
-/// Vec wrapper type for [`DesktopItem`]s \
-/// Used for simplifying type signatures and for implementing a default set of items
-#[derive(Clone)]
-pub struct DesktopItems(Vec<DesktopItem>);
-impl From<Vec<DesktopItem>> for DesktopItems {
-    fn from(items: Vec<DesktopItem>) -> Self {
-        Self(items)
-    }
-}
-
 /// Stores data about desktop items and has function depending on whether its a window item or an external link
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash)]
 pub struct DesktopItem {
     pub icon: &'static str,
     pub title: &'static str,
@@ -88,6 +82,7 @@ pub struct DesktopItem {
 }
 
 impl DesktopItem {
+    /// Constructs a new item with an icon, a title, and a function that is either a `&'static str` which holds an external url or a window's `is_open signal`
     pub fn new(
         icon: &'static str,
         title: &'static str,
@@ -95,5 +90,21 @@ impl DesktopItem {
     ) -> Self {
         let func = func.into();
         Self { icon, title, func }
+    }
+}
+
+impl From<WindowData> for DesktopItem {
+    fn from(window: WindowData) -> Self {
+        let WindowData {
+            icon,
+            title,
+            is_open,
+            ..
+        } = window;
+        Self {
+            icon,
+            title,
+            func: is_open.into(),
+        }
     }
 }

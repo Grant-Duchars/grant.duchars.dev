@@ -35,9 +35,12 @@ pub fn about() -> impl IntoView {
     let data = WindowData::new(icons::ABOUT, "About").centered();
     view! {
         <Window data>
-            <h1>"Site Under Construction"</h1>
+            <h1>"Yo! Merry Christmas!"</h1>
             <p>
-                "Hey! Welcome to my website! I am still in the process of fleshing it out. Everything here is not final and subject to change."
+                "Hi, I'm Grant Duchars, a recent computer science graduate from Lindenwood Univsersity.
+                I was born in Pheonix, AZ and raised in St. Louis, MO. Some of my hobbies include playing 
+                and theorizing about Magic: The Gathering, seeking out all the achievements in various 
+                videogames, collecting soundtracks, and working on personal coding projects such as this one."
             </p>
         </Window>
     }

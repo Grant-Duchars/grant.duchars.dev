@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Grant Duchars's Website</title>
+    <link rel="stylesheet" href="/styles-4cb495b79f6505.css" integrity="sha384-brCIJXm7fjZIBACXwOMsUm3x6zsrJ6vO/XXB+hi1zvwkD2M6qOscqPcn48mN3hKi"/>
+    
+    
+<script type="module">
+import init, * as bindings from '/grant_duchars_dev-caaffe1056e74ff3.js';
+const wasm = await init({ module_or_path: '/grant_duchars_dev-caaffe1056e74ff3_bg.wasm' });
+
+
+window.wasmBindings = bindings;
+
+
+dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
+
+</script>
+  <link rel="modulepreload" href="/grant_duchars_dev-caaffe1056e74ff3.js" crossorigin="anonymous" integrity="sha384-bS+9uFJ6QVZliCpSu6JWtclRjjBn+AHZXWOWR8i2WX/NXIn3MQALkVBKyXHN8yKf"><link rel="preload" href="/grant_duchars_dev-caaffe1056e74ff3_bg.wasm" crossorigin="anonymous" integrity="sha384-kdWk83tNtPTvpHbWB+z96/kaijB2M5qoq4Fx9v6d6tRfJ03V3cq05nbcx4qCQjf4" as="fetch" type="application/wasm"></head>
+  <body></body>
+</html>

@@ -1,5 +1,5 @@
 #![allow(dead_code)]
-use crate::Dimensions;
+use crate::{styling, Dimensions};
 use leptos::{ev, prelude::*};
 use leptos_use::{core::Position, use_event_listener, use_window};
 use std::ops;
@@ -99,5 +99,57 @@ fn get_window_height() -> f64 {
         .expect("should have a value")
         .as_f64()
         .expect("should be a number")
-        - 46.0
+    // - get_taskbar_height()
+}
+
+fn get_taskbar_height() -> f64 {
+    let style = window()
+        .get_computed_style(&document().body().unwrap())
+        .unwrap()
+        .unwrap();
+
+    let mut border_width = style.get_property_value("--taskbar-border-width").unwrap();
+    let mut total_padding = style.get_property_value("--taskbar-total-padding").unwrap();
+    let mut height = style.get_property_value("--taskbar-height").unwrap();
+
+    border_width.truncate(border_width.len() - 2);
+    total_padding.truncate(total_padding.len() - 2);
+    height.truncate(height.len() - 2);
+
+    let border_width = border_width.parse::<f64>().unwrap();
+    let total_padding = total_padding.parse::<f64>().unwrap();
+    let height = height.parse::<f64>().unwrap();
+
+    border_width + total_padding + height
+}
+
+pub fn setup_taskbar_styling() {
+    // let (boder_width, _) = use_css_var_with_options(
+    //     "--taskbar-border-width",
+    //     UseCssVarOptions::default().initial_value(format!("{}px", styling::TASKBAR_BORDER_WIDTH)),
+    // );
+    // let (total_padding, _) = use_css_var_with_options(
+    //     "--taskbar-total-padding",
+    //     UseCssVarOptions::default().initial_value(format!("{}px", styling::TASKBAR_TOTAL_PADDING)),
+    // );
+    // let (border, _) = use_css_var_with_options(
+    //     "--taskbar-total-padding",
+    //     UseCssVarOptions::default().initial_value(format!("{}px", styling::TASKBAR_TOTAL_PADDING)),
+    // );
+    let style = window()
+        .get_computed_style(&document().body().unwrap())
+        .unwrap()
+        .unwrap();
+    let _ = style.set_property(
+        "--taskbar-border-width",
+        &format!("{}px", styling::TASKBAR_BORDER_WIDTH),
+    );
+    let _ = style.set_property(
+        "--taskbar-total-padding",
+        &format!("{}px", styling::TASKBAR_TOTAL_PADDING),
+    );
+    let _ = style.set_property(
+        "--taskbar-height",
+        &format!("{}px", styling::TASKBAR_HEIGHT),
+    );
 }

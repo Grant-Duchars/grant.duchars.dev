@@ -2,9 +2,9 @@
 :root {
   --taskbar-border-width: 1px;
   --taskbar-height: 45px;
-  --taskbar-total-padding-height: 4px;
+  --taskbar-total-padding: 4px;
   --taskbar-total-height: calc(
-    calc(var(--taskbar-total-padding-height) + var(--taskbar-border-width)) +
+    calc(var(--taskbar-total-padding) + var(--taskbar-border-width)) +
       var(--taskbar-height)
   );
 }
@@ -110,8 +110,8 @@ footer {
   display: flex;
   height: var(--taskbar-height);
   border-top: var(--taskbar-border-width) solid #383838;
-  padding-top: calc(var(--taskbar-total-padding-height) / 2);
-  padding-bottom: calc(var(--taskbar-total-padding-height) / 2);
+  padding-top: calc(var(--taskbar-total-padding) / 2);
+  padding-bottom: calc(var(--taskbar-total-padding) / 2);
   backdrop-filter: blur(10px) brightness(60%);
   justify-content: center;
 }

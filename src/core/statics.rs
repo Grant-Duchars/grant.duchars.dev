@@ -13,3 +13,10 @@ pub mod external_links {
     pub static GITHUB: &str = "https://github.com/Grant-Duchars";
     pub static LINKEDIN: &str = "https://www.linkedin.com/in/grant-duchars/";
 }
+
+pub mod styling {
+    pub static TASKBAR_BORDER_WIDTH: f64 = 1.0;
+    pub static TASKBAR_TOTAL_PADDING: f64 = 4.0;
+    /// Internal taskbar height without the border or padding
+    pub static TASKBAR_HEIGHT: f64 = 45.0;
+}

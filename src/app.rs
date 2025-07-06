@@ -8,6 +8,7 @@ use window_lib::{browser, DesktopItems, Windows};
 pub fn app() -> impl IntoView {
     browser::setup_browser_center_listener();
     browser::setup_browser_dimensions_listener();
+    // browser::setup_taskbar_styling();
 
     provide_context(DesktopItems::default());
     provide_context(Windows::default());
